@@ -16,6 +16,9 @@ watch practical videos on visual studio links from googledrive  below
 (ii)https://drive.google.com/file/d/1HnfewvMrX5EpS0dGcGE9FQ18wzaiSCAC/view?usp=sharing
 (b) Cartoon character  (i):https://drive.google.com/file/d/1Er8yilr-sfC1T3f2U8sgXYEuNXaSGT9U/view?usp=sharing
  (ii)https://drive.google.com/file/d/1hi7R2UKfLSw7IgvKTBvtRTdEDuyDx6VC/view?usp=sharing
+ (d)Personal business card: https://drive.google.com/file/d/1nO0ubeAhzBn4kPU3XPS59_IAXzJtKlj0/view?usp=sharing
+ (e) Using graphics H library : https://drive.google.com/file/d/1jWjM8CPf5IdhWuPQsoDLpE9NGXSOEO53/view?usp=sharing
+ (f)Jet flying across the screen: https://drive.google.com/file/d/1EDr7avpetESay9SNdrLETjSI-odh1Qsn/view?usp=sharing
  
    
 
@@ -96,9 +99,9 @@ A jet animation was developed by modifying a basic OpenGL program to simulate mo
  6. EXECUTION PROCEDURE
 
 1. Open project in Visual Studio
-2. Ensure freeglut is configured correctly
+2. Ensured freeglut was configured correctly
 3. Build solution
-4. Run using Local Windows Debugger
+4. Ran using Local Windows Debugger
 
 This project demonstrates fundamental computer graphics concepts including rendering pipeline stages, geometric primitives, and basic animation using OpenGL.
 
