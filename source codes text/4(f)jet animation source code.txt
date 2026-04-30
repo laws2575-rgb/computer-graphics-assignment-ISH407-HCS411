@@ -1,0 +1,118 @@
+#define FREEGLUT_STATIC
+#include <GL/freeglut.h>
+#include <vector>
+
+float jetX = -1.0f;
+
+// Store black trail dots
+std::vector<float> trailDots;
+
+// Function to draw text
+void drawText(float x, float y, const char* text) {
+    glRasterPos2f(x, y);
+    while (*text) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *text++);
+    }
+}
+
+// Draw black dotted smoke trail
+void drawTrail() {
+    glColor3f(0.0f, 0.0f, 0.0f);
+
+    for (float x : trailDots) {
+        glPointSize(4.0f);
+        glBegin(GL_POINTS);
+        glVertex2f(x, 0.0f);
+        glEnd();
+    }
+}
+
+void drawJet() {
+    // Plane body
+    glBegin(GL_POLYGON);
+    glColor3f(0.8f, 0.8f, 0.8f);
+    glVertex2f(jetX, 0.0f);
+    glVertex2f(jetX + 0.2f, 0.05f);
+    glVertex2f(jetX + 0.4f, 0.0f);
+    glVertex2f(jetX + 0.2f, -0.05f);
+    glEnd();
+
+    // Wings changed from RED to YELLOW
+    glBegin(GL_TRIANGLES);
+    glColor3f(1.0f, 1.0f, 0.0f);
+
+    // Top wing
+    glVertex2f(jetX + 0.15f, 0.0f);
+    glVertex2f(jetX + 0.05f, 0.15f);
+    glVertex2f(jetX + 0.25f, 0.0f);
+
+    // Bottom wing
+    glVertex2f(jetX + 0.15f, 0.0f);
+    glVertex2f(jetX + 0.05f, -0.15f);
+    glVertex2f(jetX + 0.25f, 0.0f);
+    glEnd();
+}
+
+void display() {
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    // Draw smoke trail first
+    drawTrail();
+
+    // Draw plane
+    drawJet();
+
+    // Banner text
+    glColor3f(0.0f, 0.0f, 0.0f);
+    drawText(jetX - 0.1f, 0.25f, "flight to great zimbawe mashava campus");
+
+    glutSwapBuffers();
+}
+
+void update(int value) {
+    // Add black dots behind plane
+    trailDots.push_back(jetX - 0.05f);
+
+    // Limit trail size
+    if (trailDots.size() > 80) {
+        trailDots.erase(trailDots.begin());
+    }
+
+    // Move plane
+    jetX += 0.02f;
+
+    // Reset plane and trail
+    if (jetX > 1.5f) {
+        jetX = -1.5f;
+        trailDots.clear();
+    }
+
+    glutPostRedisplay();
+    glutTimerFunc(30, update, 0);
+}
+
+void init() {
+    glClearColor(0.5f, 0.8f, 1.0f, 1.0f);
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(-1.5, 1.5, -1.0, 1.0);
+
+    glPointSize(4.0f);
+}
+
+int main(int argc, char** argv) {
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+    glutInitWindowSize(1000, 700);
+    glutCreateWindow("Jet Animation ");
+
+    init();
+
+    glutDisplayFunc(display);
+    glutTimerFunc(25, update, 0);
+
+    glutMainLoop();
+
+    return 0;
+}

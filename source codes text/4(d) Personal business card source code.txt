@@ -1,0 +1,134 @@
+#define FREEGLUT_STATIC
+#include <GL/freeglut.h>
+#include <cmath>
+
+float glow = 0.0f;
+bool increasing = true;
+
+// ---------- TEXT FUNCTION ----------
+void drawText(float x, float y, const char* text) {
+    glRasterPos2f(x, y);
+    while (*text) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *text++);
+    }
+}
+
+// ---------- SIMPLE LOGO ----------
+void drawLogo() {
+    glPushMatrix();
+    glTranslatef(-0.75f, 0.35f, 0.0f);
+
+    // Outer circle
+    glColor3f(0.2f, 0.8f, 1.0f);
+    glBegin(GL_POLYGON);
+    for (int i = 0; i < 360; i++) {
+        float angle = i * 3.14159f / 180;
+        glVertex2f(0.08f * cos(angle), 0.08f * sin(angle));
+    }
+    glEnd();
+
+    // Inner text "NG"
+    glColor3f(0.0f, 0.0f, 0.2f);
+    glRasterPos2f(-0.03f, -0.02f);
+    const char* logoText = "NG";
+    while (*logoText) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *logoText++);
+    }
+
+    glPopMatrix();
+}
+
+// ---------- DISPLAY ----------
+void display() {
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    // ---------- GRADIENT BACKGROUND ----------
+    glBegin(GL_QUADS);
+    glColor3f(0.05f, 0.05f, 0.15f);
+    glVertex2f(-1.0f, -1.0f);
+
+    glColor3f(0.1f, 0.0f, 0.2f);
+    glVertex2f(1.0f, -1.0f);
+
+    glColor3f(0.0f, 0.2f, 0.3f);
+    glVertex2f(1.0f, 1.0f);
+
+    glColor3f(0.0f, 0.1f, 0.2f);
+    glVertex2f(-1.0f, 1.0f);
+    glEnd();
+
+    // ---------- CARD BODY ----------
+    glColor3f(0.08f, 0.12f, 0.25f);
+    glBegin(GL_QUADS);
+    glVertex2f(-0.9f, -0.6f);
+    glVertex2f(0.9f, -0.6f);
+    glVertex2f(0.9f, 0.6f);
+    glVertex2f(-0.9f, 0.6f);
+    glEnd();
+
+    // ---------- ANIMATED GLOWING BORDER ----------
+    glLineWidth(3.0f);
+    glColor3f(0.2f + glow, 0.6f + glow * 0.5f, 1.0f);
+
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(-0.9f, -0.6f);
+    glVertex2f(0.9f, -0.6f);
+    glVertex2f(0.9f, 0.6f);
+    glVertex2f(-0.9f, 0.6f);
+    glEnd();
+
+    // ---------- LOGO ----------
+    drawLogo();
+
+    // ---------- TEXT ----------
+    glColor3f(1.0f, 1.0f, 1.0f);
+
+    drawText(-0.6f, 0.35f, "LAWSON BADZA");
+    drawText(-0.6f, 0.20f, "Graphic Developer");
+
+    drawText(-0.6f, 0.05f, "Reg Number: M192165");
+    drawText(-0.6f, -0.10f, "Email: laws2575@gmail.com");
+    drawText(-0.6f, -0.20f, "Phone: +263 788 543 729");
+    drawText(-0.6f, -0.30f, "Address: 16 Gainville, Glenlorne");
+    drawText(-0.6f, -0.40f, "Harare, Zimbabwe");
+
+    glutSwapBuffers();
+}
+
+// ---------- ANIMATION ----------
+void update(int value) {
+    if (increasing)
+        glow += 0.02f;
+    else
+        glow -= 0.02f;
+
+    if (glow > 0.5f) increasing = false;
+    if (glow < 0.0f) increasing = true;
+
+    glutPostRedisplay();
+    glutTimerFunc(30, update, 0);
+}
+
+// ---------- INIT ----------
+void init() {
+    glClearColor(0, 0, 0, 1);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
+// ---------- MAIN ----------
+int main(int argc, char** argv) {
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+
+    glutInitWindowSize(1000, 600);
+    glutCreateWindow(" Business Card - Lawson Badza");
+
+    init();
+
+    glutDisplayFunc(display);
+    glutTimerFunc(30, update, 0);
+
+    glutMainLoop();
+    return 0;
+}
