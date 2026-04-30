@@ -11,6 +11,14 @@
 
  ASSIGNMENT TITLE : OpenGL Graphics Programming Assignment
 
+watch practical videos on visual studio links from googledrive  below
+4(a) Geometry Primitive shapes (i):https://drive.google.com/file/d/1TyUl7jjtwY9ykFz9TrZklecsNF3tq2wv/view?usp=sharing
+(ii)https://drive.google.com/file/d/1HnfewvMrX5EpS0dGcGE9FQ18wzaiSCAC/view?usp=sharing
+(b) Cartoon character  (i):https://drive.google.com/file/d/1Er8yilr-sfC1T3f2U8sgXYEuNXaSGT9U/view?usp=sharing
+ (ii)https://drive.google.com/file/d/1hi7R2UKfLSw7IgvKTBvtRTdEDuyDx6VC/view?usp=sharing
+ 
+   
+
  ABSTRACT
 
 This report presents the implementation of a computer graphics project using OpenGL, focusing on rendering 2D and 3D objects using geometric primitives. The project demonstrates the OpenGL rendering pipeline, object construction, and animation techniques.
